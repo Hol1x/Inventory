@@ -124,7 +124,7 @@ namespace WindowsFormsApplication1
             }
         }
 
-        private static void Shake(Label form)
+        public static void Shake(Label form)
         {
             var original = form.Location;
             var rnd = new Random(1337);
@@ -166,6 +166,68 @@ namespace WindowsFormsApplication1
             //Finally add the Rows
             //dataGridView1.Rows.Add(5);
             //dataGridView1.EndEdit();
+        }
+
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            fileDialog.DefaultExt = ".xsd";
+            fileDialog.AddExtension = true;
+            fileDialog.Filter = "Files (*.xsd)|*.xsd";
+            if (fileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                //Console.WriteLine("FileDialog Done");
+                DataTable dt = new DataTable();
+                //Console.WriteLine("Create DataTable ds Done");
+                dt.ReadXmlSchema(fileDialog.FileName);
+                dt.ReadXml(fileDialog.FileName);
+                //Console.WriteLine("ReadXml from FileDialog Done");
+                dataGridView1.DataSource = dt;
+                //Console.WriteLine("Set dataGridView1.DataSource to DataTable dt Done");
+            }
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            dataGridView1.EndEdit();
+            BindingSource bs = new BindingSource();
+
+
+            //dat = (DataTable) (dataGridView1.DataSource);
+            //dat.AcceptChanges();
+            //dat.TableName = "saveData";
+            //dat.WriteXml("data.xsd", XmlWriteMode.WriteSchema);
+
+            //BindingSource bs = (BindingSource)dataGridView1.DataSource;
+            DataTable dt = dataGridView1.DataSource as DataTable;
+            dataGridView1.Update();
+            dt.TableName = "SavedData";
+            SaveFileDialog fileDialog = new SaveFileDialog();
+            fileDialog.DefaultExt = ".xsd";
+            fileDialog.AddExtension = true;
+            fileDialog.Filter = "Files (*.xsd)|*.xsd";
+            if (fileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                dt.WriteXml(fileDialog.FileName, XmlWriteMode.WriteSchema);
+                System.Windows.Forms.MessageBox.Show("Data Saved");
+
+            }
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dataGridView1.DataSource = null;
+            DataTable load = new DataTable();
+            load.Columns.Add("ID", typeof(int));
+            load.Columns.Add("name", typeof(string));
+
+            dataGridView1.DataSource = load;
+        }
+
+        private void importToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
