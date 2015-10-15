@@ -85,6 +85,7 @@
             // 
             // login
             // 
+            this.AcceptButton = this.loginButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(429, 217);
@@ -94,6 +95,7 @@
             this.Controls.Add(this.UsernameBox);
             this.Controls.Add(this.loginButton);
             this.Name = "login";
+            this.ShowIcon = false;
             this.Text = "login";
             this.ResumeLayout(false);
             this.PerformLayout();

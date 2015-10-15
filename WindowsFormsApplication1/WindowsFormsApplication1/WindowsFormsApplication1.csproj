@@ -57,11 +57,11 @@
     <Compile Include="excelImportForm.Designer.cs">
       <DependentUpon>excelImportForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="LoadExcel.cs">
+    <Compile Include="loadExcele.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LoadExcel.Designer.cs">
-      <DependentUpon>LoadExcel.cs</DependentUpon>
+    <Compile Include="loadExcele.Designer.cs">
+      <DependentUpon>loadExcele.cs</DependentUpon>
     </Compile>
     <Compile Include="login.cs">
       <SubType>Form</SubType>
@@ -85,8 +85,8 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LoadExcel.resx">
-      <DependentUpon>LoadExcel.cs</DependentUpon>
+    <EmbeddedResource Include="loadExcele.resx">
+      <DependentUpon>loadExcele.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="login.resx">
       <DependentUpon>login.cs</DependentUpon>
