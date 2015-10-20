@@ -48,13 +48,13 @@ namespace WindowsFormsApplication1
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            UpdateSaveCounter();
+            //UpdateSaveCounter();
             Console.WriteLine("something happend in counter");
         }
         private void DataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             // Update the balance column whenever the value of any cell changes.
-            UpdateSaveCounter();
+            //UpdateSaveCounter();
             Console.WriteLine("something happend in counter");
         }
 
@@ -62,6 +62,7 @@ namespace WindowsFormsApplication1
         
 
         private void AutoSave() {
+            
             dataGridView1.EndEdit();
             BindingSource bs = new BindingSource();
 
@@ -76,9 +77,14 @@ namespace WindowsFormsApplication1
             //dataGridView1.Update();
             dt.TableName = "AutoDataSave";
             //SaveFileDialog fileDialog = new SaveFileDialog();
-            
+            if (lastSavedFile != "") {
                 dt.WriteXml(lastSavedFile, XmlWriteMode.WriteSchema);
                 System.Windows.Forms.MessageBox.Show("Data Saved");
+            }
+            else {
+                lastSavedFile = "temp";
+            }
+                
 
             
         }

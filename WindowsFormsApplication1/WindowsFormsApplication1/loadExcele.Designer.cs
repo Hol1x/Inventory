@@ -70,6 +70,9 @@
             this.sheetTextBox.Name = "sheetTextBox";
             this.sheetTextBox.Size = new System.Drawing.Size(244, 20);
             this.sheetTextBox.TabIndex = 7;
+            this.sheetTextBox.TextChanged += new System.EventHandler(this.sheetTextBox_TextChanged);
+            this.sheetTextBox.Enter += new System.EventHandler(this.sheetTextBox_Enter);
+            this.sheetTextBox.Leave += new System.EventHandler(this.sheetTextBox_Leave);
             // 
             // pathTextBox
             // 
@@ -77,6 +80,10 @@
             this.pathTextBox.Name = "pathTextBox";
             this.pathTextBox.Size = new System.Drawing.Size(244, 20);
             this.pathTextBox.TabIndex = 6;
+            this.pathTextBox.DragDrop += new System.Windows.Forms.DragEventHandler(this.pathTextBox_DragDrop);
+            this.pathTextBox.DragEnter += new System.Windows.Forms.DragEventHandler(this.pathTextBox_DragEnter);
+            this.pathTextBox.DragOver += new System.Windows.Forms.DragEventHandler(this.pathTextBox_DragOver);
+            this.pathTextBox.DragLeave += new System.EventHandler(this.pathTextBox_DragLeave);
             // 
             // Done
             // 
@@ -90,6 +97,7 @@
             // 
             // loadExcele
             // 
+            this.AcceptButton = this.Done;
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -101,7 +109,7 @@
             this.Controls.Add(this.sheetTextBox);
             this.Controls.Add(this.pathTextBox);
             this.Name = "loadExcele";
-            this.Text = "loadExcele";
+            this.Load += new System.EventHandler(this.loadExcele_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

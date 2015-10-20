@@ -13,9 +13,14 @@ namespace WindowsFormsApplication1
 {
     public partial class loadExcele : Form
     {
+        bool edited = false;
+        string initText = "Blad1";
+        
         public loadExcele()
         {
+            
             InitializeComponent();
+            sheetTextBox.Text = initText;
         }
 
         private void Done_Click(object sender, EventArgs e)
@@ -65,6 +70,83 @@ namespace WindowsFormsApplication1
             {
                 this.pathTextBox.Text = fileDialog.FileName;
             }
+        }
+
+        private void sheetTextBox_TextChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine(edited);
+        }
+        
+        private void sheetTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            edited = !char.IsControl(e.KeyChar);
+            Console.WriteLine("KeyPressed " + edited);
+        }
+
+        private void sheetTextBox_Enter(object sender, EventArgs e)
+        {
+            if (!edited) sheetTextBox.Clear();
+            Console.WriteLine("Enter "+edited );
+        }
+
+        private void sheetTextBox_Leave(object sender, EventArgs e)
+        {
+            if (!edited) sheetTextBox.Text = initText;
+            Console.WriteLine("Leave "+ edited);
+        }
+
+        private void sheetTextBox_Leave_1(object sender, EventArgs e)
+        {
+            Console.WriteLine("Leave " + edited);
+        }
+
+        private void pathTextBox_DragOver(object sender, DragEventArgs e)
+        {
+
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                e.Effect = DragDropEffects.Copy;
+            else
+                e.Effect = DragDropEffects.None;
+
+        }
+
+        private void pathTextBox_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                e.Effect = DragDropEffects.Copy;
+            else
+                e.Effect = DragDropEffects.None;
+
+            string[] FileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+
+            string s = "";
+
+            foreach (string File in FileList)
+                s = s + ", " + File;
+            pathTextBox.Text = s;
+        }
+
+        private void loadExcele_Load(object sender, EventArgs e)
+        {
+            pathTextBox.AllowDrop = true;
+            pathTextBox.DragEnter += new DragEventHandler(pathTextBox_DragEnter);
+            pathTextBox.DragDrop += new DragEventHandler(pathTextBox_DragDrop);
+        }
+
+        private void pathTextBox_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] FileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+
+            string s = "";
+
+            foreach (string File in FileList)
+                s = s + " " + File;
+            pathTextBox.Text = s;
+        }
+
+        private void pathTextBox_DragLeave(object sender, EventArgs e)
+        {
+            pathTextBox.Text = "";
         }
     }
 }
