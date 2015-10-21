@@ -62,8 +62,8 @@ namespace WindowsFormsApplication1
         
 
         private void AutoSave() {
-            
-            dataGridView1.EndEdit();
+            if (lastSavedFile != "") {
+                dataGridView1.EndEdit();
             BindingSource bs = new BindingSource();
 
 
@@ -74,13 +74,17 @@ namespace WindowsFormsApplication1
 
             //BindingSource bs = (BindingSource)dataGridView1.DataSource;
             DataTable dt = dataGridView1.DataSource as DataTable;
-            //dataGridView1.Update();
-            dt.TableName = "AutoDataSave";
-            //SaveFileDialog fileDialog = new SaveFileDialog();
-            if (lastSavedFile != "") {
-                dt.WriteXml(lastSavedFile, XmlWriteMode.WriteSchema);
-                System.Windows.Forms.MessageBox.Show("Data Saved");
-            }
+                //dataGridView1.Update();
+                
+            if (dt != null){
+	        dt.TableName = "AutoDataSave";
+	            //SaveFileDialog fileDialog = new SaveFileDialog();
+	            
+	                dt.WriteXml(lastSavedFile, XmlWriteMode.WriteSchema);
+	                System.Windows.Forms.MessageBox.Show("Data Saved");
+	            
+}
+}
             else {
                 lastSavedFile = "temp";
             }
@@ -120,6 +124,7 @@ namespace WindowsFormsApplication1
             fileDialog.Filter = "Files (*.xsd)|*.xsd";
             if (fileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
+                tabControl1.TabPages[tabControl1.SelectedIndex].Text = fileDialog.SafeFileName;
                 //Console.WriteLine("FileDialog Done");
                 DataTable dt = new DataTable();
                 //Console.WriteLine("Create DataTable ds Done");
@@ -159,17 +164,29 @@ namespace WindowsFormsApplication1
                 dt.WriteXml(fileDialog.FileName, XmlWriteMode.WriteSchema);
                 System.Windows.Forms.MessageBox.Show("Data Saved");
 
+                System.IO.FileInfo fi = new System.IO.FileInfo(fileDialog.FileName);
+                tabControl1.TabPages[tabControl1.SelectedIndex].Text = System.IO.FileInfo(fileDialog.FileName); 
             }
         }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            dataGridView1.DataSource = null;
+            string title = "New Page " + (tabControl1.TabCount + 1).ToString();
+            TabPage myTabPage = new TabPage(title);
+            tabControl1.TabPages.Add(myTabPage);
+
+            DataGridView dataGridView2 = new DataGridView();
+            dataGridView2.Dock = System.Windows.Forms.DockStyle.Fill;
+            myTabPage.Controls.Add(dataGridView2);
+            
+
+            //dataGridView1.DataSource = null;
             DataTable load = new DataTable();
             load.Columns.Add("ID", typeof(int));
             load.Columns.Add("name", typeof(string));
 
-            dataGridView1.DataSource = load;
+            dataGridView2.DataSource = load;
+            //Console.WriteLine(tabControl1.SelectedIndex);
         }
 
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
@@ -183,11 +200,23 @@ namespace WindowsFormsApplication1
             while (true) {
                 Console.WriteLine(lastSavedFile);
                 if (lastSavedFile != null){
-	                System.Threading.Thread.Sleep(2000);
+	                System.Threading.Thread.Sleep(10000);
                     AutoSave();
 }
             }
             
+        }
+
+        private void excelImportForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tabControl1.TabPages.Remove(tabControl1.SelectedTab);
+            // Removes all the tabs:
+            //tabControl1.TabPages.Clear();
         }
     }
 }

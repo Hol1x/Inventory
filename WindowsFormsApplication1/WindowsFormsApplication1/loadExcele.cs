@@ -122,7 +122,7 @@ namespace WindowsFormsApplication1
             string s = "";
 
             foreach (string File in FileList)
-                s = s + ", " + File;
+                s = s + " " + File;
             pathTextBox.Text = s;
         }
 
