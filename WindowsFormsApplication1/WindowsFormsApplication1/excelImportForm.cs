@@ -8,16 +8,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using Utilities;
 
 namespace WindowsFormsApplication1
 {
     public partial class excelImportForm : Form
     {
         DataTable dat = new DataTable();
+        globalKeyboardHook gkh = new globalKeyboardHook();
         string lastSavedFile;
         public excelImportForm()
         {
             InitializeComponent();
+            gkh.HookedKeys.Add(Keys.ControlKey);
+            
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
         }
 
@@ -165,7 +169,7 @@ namespace WindowsFormsApplication1
                 System.Windows.Forms.MessageBox.Show("Data Saved");
 
                 System.IO.FileInfo fi = new System.IO.FileInfo(fileDialog.FileName);
-                tabControl1.TabPages[tabControl1.SelectedIndex].Text = System.IO.FileInfo(fileDialog.FileName); 
+               // tabControl1.TabPages[tabControl1.SelectedIndex].Text = System.IO.FileInfo(fileDialog.FileName); 
             }
         }
 
@@ -217,6 +221,12 @@ namespace WindowsFormsApplication1
             tabControl1.TabPages.Remove(tabControl1.SelectedTab);
             // Removes all the tabs:
             //tabControl1.TabPages.Clear();
+        }
+
+        private void fullscreenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Class1 fullscreen = new Class1();
+            fullscreen.GoFullscreenToggle(this.FindForm());
         }
     }
 }

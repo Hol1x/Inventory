@@ -51,12 +51,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdressCheck.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="excelImportForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="excelImportForm.Designer.cs">
       <DependentUpon>excelImportForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="globalKeyboardHook.cs" />
     <Compile Include="loadExcele.cs">
       <SubType>Form</SubType>
     </Compile>
